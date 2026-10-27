@@ -4,5 +4,6 @@
   "description": "Newsletters and mailing lists on Postgres 17, admin created on first boot",
   "category": "Automation",
   "image": "https://raw.githubusercontent.com/two-workspaces/listmonk/main/icon.svg",
-  "card_desc": "listmonk: fast self-hosted newsletter and mailing list manager. Runs listmonk 6.2.0 on its own Postgres 17, with the admin account created on first boot."
+  "card_desc": "listmonk: fast self-hosted newsletter and mailing list manager. Runs listmonk 6.2.0 on its own Postgres 17, with the admin account created on first boot.",
+  "id": "f85b7b07-6ef8-4a3a-a023-b250dfbdebbd"
 }
