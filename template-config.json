@@ -1,0 +1,139 @@
+{
+ "buckets": {},
+ "services": {
+  "d7483c24-7b65-4555-b898-43cc73ac0283": {
+   "icon": "https://raw.githubusercontent.com/two-workspaces/listmonk/main/icon.svg",
+   "name": "listmonk",
+   "build": {
+    "dockerfilePath": "Dockerfile"
+   },
+   "deploy": {
+    "startCommand": null,
+    "healthcheckPath": "/health",
+    "healthcheckTimeout": 300,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+   },
+   "source": {
+    "repo": "https://github.com/two-workspaces/listmonk",
+    "rootDirectory": null
+   },
+   "networking": {
+    "serviceDomains": {
+     "<hasDomain>": {}
+    }
+   },
+   "volumeMounts": {
+    "7edcbb0d-5937-4716-a48c-447854eab936": {
+     "mountPath": "/listmonk/uploads"
+    }
+   },
+   "variables": {
+    "LISTMONK_ADMIN_USER": {
+     "defaultValue": "admin",
+     "description": "Super admin username, created on the first boot only.",
+     "isOptional": false
+    },
+    "LISTMONK_ADMIN_PASSWORD": {
+     "defaultValue": "${{secret(24, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\")}}",
+     "description": "Super admin password, generated at deploy time and used on the first boot only. Change it in listmonk afterwards (Users).",
+     "isOptional": false
+    },
+    "LISTMONK_app__address": {
+     "defaultValue": ":9000",
+     "description": "Listen address (all interfaces, port 9000) - leave as is.",
+     "isOptional": false
+    },
+    "PORT": {
+     "defaultValue": "9000",
+     "description": "HTTP port listmonk listens on - leave as is.",
+     "isOptional": false
+    },
+    "LISTMONK_db__host": {
+     "defaultValue": "${{Postgres.RAILWAY_PRIVATE_DOMAIN}}",
+     "description": "Postgres host (private network)",
+     "isOptional": false
+    },
+    "LISTMONK_db__port": {
+     "defaultValue": "5432",
+     "description": "Postgres port",
+     "isOptional": false
+    },
+    "LISTMONK_db__user": {
+     "defaultValue": "${{Postgres.POSTGRES_USER}}",
+     "description": "Postgres user",
+     "isOptional": false
+    },
+    "LISTMONK_db__password": {
+     "defaultValue": "${{Postgres.POSTGRES_PASSWORD}}",
+     "description": "Postgres password",
+     "isOptional": false
+    },
+    "LISTMONK_db__database": {
+     "defaultValue": "${{Postgres.POSTGRES_DB}}",
+     "description": "Postgres database",
+     "isOptional": false
+    },
+    "LISTMONK_db__ssl_mode": {
+     "defaultValue": "disable",
+     "description": "Private network, no TLS needed",
+     "isOptional": false
+    },
+    "TZ": {
+     "defaultValue": "Etc/UTC",
+     "description": "Time zone for logs and scheduled campaigns",
+     "isOptional": false
+    }
+   }
+  },
+  "9af32e90-96c7-4e29-9a04-f0740cd5ed32": {
+   "icon": "https://devicons.railway.app/i/postgresql.svg",
+   "name": "Postgres",
+   "build": {},
+   "deploy": {
+    "startCommand": null,
+    "healthcheckPath": null,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+   },
+   "source": {
+    "image": "postgres:17.11-alpine"
+   },
+   "networking": {
+    "serviceDomains": {}
+   },
+   "volumeMounts": {
+    "fde379bd-3e59-4bb5-a5dd-9f7c31a1d68a": {
+     "mountPath": "/var/lib/postgresql/data"
+    }
+   },
+   "variables": {
+    "POSTGRES_DB": {
+     "defaultValue": "listmonk",
+     "description": "Database name",
+     "isOptional": false
+    },
+    "POSTGRES_USER": {
+     "defaultValue": "listmonk",
+     "description": "Database user",
+     "isOptional": false
+    },
+    "POSTGRES_PASSWORD": {
+     "defaultValue": "${{secret(32, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\")}}",
+     "description": "Auto-generated database password",
+     "isOptional": false
+    },
+    "PGDATA": {
+     "defaultValue": "/var/lib/postgresql/data/pgdata",
+     "description": "Data subdirectory - keeps Postgres happy on Railway volumes",
+     "isOptional": false
+    },
+    "RAILWAY_DEPLOYMENT_DRAINING_SECONDS": {
+     "defaultValue": "60",
+     "description": "Time for Postgres to shut down cleanly on redeploy",
+     "isOptional": false
+    }
+   }
+  }
+ }
+}
